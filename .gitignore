@@ -1,2 +1,7 @@
-.idea
+# Java class files
+*.class
+
+# Intellij project files
+*.iml
+.idea/
 target
