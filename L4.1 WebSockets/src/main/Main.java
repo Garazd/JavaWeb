@@ -24,6 +24,7 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
+        java.util.logging.Logger.getGlobal().info("Server started");
         server.join();
     }
 }
