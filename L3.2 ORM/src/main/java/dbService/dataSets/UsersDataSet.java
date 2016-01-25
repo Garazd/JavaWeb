@@ -3,13 +3,6 @@ package dbService.dataSets;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
 @Entity
 @Table(name = "users")
 public class UsersDataSet implements Serializable { // Serializable Important to Hibernate!
