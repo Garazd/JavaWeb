@@ -6,13 +6,6 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
-/**
- * @author v.chibrikov
- *         <p/>
- *         Пример кода для курса на https://stepic.org/
- *         <p/>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
 @SuppressWarnings("UnusedDeclaration")
 @WebSocket
 public class ChatWebSocket {

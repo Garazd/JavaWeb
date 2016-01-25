@@ -8,13 +8,6 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-/**
- * @author v.chibrikov
- *         <p/>
- *         Пример кода для курса на https://stepic.org/
- *         <p/>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
 public class Main {
     public static void main(String[] args) throws Exception {
         Server server = new Server(8080);
