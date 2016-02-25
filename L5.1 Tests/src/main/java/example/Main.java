@@ -53,7 +53,6 @@ public class Main {
 
         server.start();
         logger.info("Server started");
-
         server.join();
     }
 }
