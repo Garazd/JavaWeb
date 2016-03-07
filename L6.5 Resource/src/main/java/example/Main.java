@@ -1,9 +1,8 @@
 package example;
 
-import resourceServer.ResourceServer;
-import resourceServer.ResourceServerController;
-import resourceServer.ResourceServerControllerMBean;
-import resourceServer.ResourceServerImpl;
+import java.lang.management.ManagementFactory;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Handler;
@@ -12,27 +11,26 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.HomePageServlet;
-
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import java.lang.management.ManagementFactory;
+import resourceServer.ResourceServerController;
+import resourceServer.ResourceServerControllerMBean;
+import resources.TestResource;
+import servlets.ResourceServlet;
 
 public class Main {
     static final Logger logger = LogManager.getLogger(Main.class.getName());
 
     public static void main(String[] args) throws Exception {
 
-        ResourceServerImpl resourceServer = new ResourceServer("Garazd", 5);
+        TestResource testResource = new TestResource();
 
-        ResourceServerControllerMBean serverStatistics = new ResourceServerController(resourceServer);
+        ResourceServerControllerMBean testServerStatistics = new ResourceServerController(testResource);
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = new ObjectName("Admin:type=ResourceServerController");
-        mbs.registerMBean(serverStatistics, name);
+        mbs.registerMBean(testServerStatistics, name);
 
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new HomePageServlet(resourceServer)), HomePageServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new ResourceServlet(testServerStatistics)), ResourceServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);
