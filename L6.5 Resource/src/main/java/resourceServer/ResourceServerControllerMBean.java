@@ -1,7 +1,9 @@
 package resourceServer;
 
-public interface ResourceServerControllerMBean {
-    public String getName();
+import resources.TestResource;
 
-    public int getAge();
+public interface ResourceServerControllerMBean {
+    int getAge();
+    String getName();
+    void setTestResource(TestResource testResource);
 }

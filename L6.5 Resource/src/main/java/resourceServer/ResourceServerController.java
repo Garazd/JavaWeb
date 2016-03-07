@@ -1,19 +1,26 @@
 package resourceServer;
 
-public class ResourceServerController implements ResourceServerControllerMBean {
-    private final ResourceServerImpl resourceServer;
+import resources.TestResource;
 
-    public ResourceServerController(ResourceServerImpl resourceServer) {
-        this.resourceServer = resourceServer;
+public class ResourceServerController implements ResourceServerControllerMBean {
+    private TestResource testResource;
+
+    public ResourceServerController(TestResource testResource) {
+        this.testResource = testResource;
     }
 
     @Override
     public String getName() {
-        return resourceServer.getName();
+        return testResource.getName();
+    }
+
+    @Override
+    public void setTestResource(final TestResource testResource) {
+        this.testResource = testResource;
     }
 
     @Override
     public int getAge() {
-        return resourceServer.getAge();
+        return testResource.getAge();
     }
 }
