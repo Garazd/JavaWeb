@@ -17,25 +17,29 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        int port = 5060;
+        int port = 5090;
+
         ExecutorService executor = Executors.newFixedThreadPool(CLIENTS_NUMBER);
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server started on port: " + port);
+
+            System.out.println("Server started");
             long startTime = new Date().getTime();
+
             while (new Date().getTime() < startTime + TIME_TO_WORK) {
-                executor.submit(new MirrorSocketRunnable(serverSocket.accept()));
+                executor.submit(new SocketRunnable(serverSocket.accept()));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         executor.awaitTermination(1, TimeUnit.MINUTES);
         executor.shutdown();
-        System.out.println("Bye.");
     }
 
-    private static class MirrorSocketRunnable implements Runnable {
+    private static class SocketRunnable implements Runnable {
         private final Socket clientSocket;
 
-        private MirrorSocketRunnable(Socket clientSocket) {
+        private SocketRunnable(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
 
@@ -43,11 +47,12 @@ public class Main {
         public void run() {
             try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+
                 String inputLine;
                 String outputLine;
                 int lineIndex = 0;
+
                 while ((inputLine = in.readLine()) != null) {
-                    //System.out.println("Message from client: " + inputLine);
                     outputLine = inputLine;
                     out.println(outputLine);
                     ++lineIndex;
@@ -57,7 +62,6 @@ public class Main {
                 System.out.println("Lines processed: " + lineIndex);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
-                System.exit(1);
             }
         }
     }
